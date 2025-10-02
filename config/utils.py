@@ -138,10 +138,11 @@ def get_logger(name: str, level: str = None, env: str = None) -> logging.Logger:
     return logger
 
 
-def create_tables(spark,schemas,database):
+def create_tables(spark,schemas,database,clientId):
     for table, schema in schemas.items():
+        table=table.split(".")[0]
         cols = [f"{f.name} {f.dataType.simpleString().upper()}" for f in schema.fields]
-        spark.sql(f"""create table if not exists {database}.{table} (
+        spark.sql(f"""create table if not exists {database}.{clientId}_{table} (
             {", ".join(cols)}
         ) using delta """)
         print(f"{table} table  created successfully under {database} schema")

@@ -1,6 +1,5 @@
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType
 
-
 users_schema = StructType([
     StructField("id", IntegerType(), True),
     StructField("current_age", IntegerType(), True),
