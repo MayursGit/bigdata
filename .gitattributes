@@ -1,0 +1,21 @@
+# Default text handling
+* text=auto
+
+# Scripts
+*.sh text eol=lf
+*.bat text eol=crlf
+*.py text eol=lf
+
+# Config and documentation
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.zip binary
+*.jar binary
