@@ -1,0 +1,11 @@
+cards:
+  - add_audit_cols
+#  - deduplicate_records
+
+users:
+  - add_audit_cols
+#  - standardize_columns
+
+transactions:
+  - add_audit_cols
+#  - scd_type2

@@ -1,0 +1,26 @@
+environments:
+  "dev":
+    #incoming_path: "/Workspace/Users/mayur10594@gmail.com/ETL_project/incoming"
+    incoming_path: "/Volumes/workspace/default/incoming/"
+    bronze_path: "/Volumes/workspace/default/bronze/"
+    silver_path: "/Volumes/workspace/default/silver/"
+    gold_path: "/Volumes/workspace/default/gold/"
+    processed_path: "/Workspace/Users/mayur10594@gmail.com/ETL_project/processed"
+    db_name: "dev_db"
+
+  "test":
+    raw_path: "dbfs:/mnt/test/raw/"
+    processed_path: "dbfs:/mnt/test/processed/"
+    db_name: "test_db"
+
+  "prod":
+    raw_path: "dbfs:/mnt/prod/raw/"
+    processed_path: "dbfs:/mnt/prod/processed/"
+    db_name: "prod_db"
+
+tables:
+  transactions: "transactions"
+  users: "users"
+  cards: "cards"
+
+

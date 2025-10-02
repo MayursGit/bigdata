@@ -1,0 +1,36 @@
+keys:
+  - id
+#  - client_id
+
+hash_columns:
+  - current_age
+  - retirement_age
+  - birth_year
+  - birth_month
+  - gender
+  - address
+  - latitude
+  - longitude
+  - per_capita_income
+  - yearly_income
+  - total_debt
+  - credit_score
+  - num_credit_cards
+
+audit_columns:
+  create_user: create_user
+  create_date: create_date
+  update_user: update_user
+  update_date: update_date
+  start_date: start_date
+  end_date: end_date
+  active_status: active_status
+
+audit_values:
+  create_user: cpprod
+  update_user: cpprod
+  active_status_active: A
+  active_status_inactive: D
+
+options:
+  soft_delete: false   # enable or disable soft delete
