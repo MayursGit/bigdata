@@ -1,0 +1,16 @@
+dev:
+  cards:
+    sqls:
+      - "debit_card_extract.sql"
+      - "credit_card_extract.sql"
+      # - "atm_card_extract.sql"
+  users:
+    sqls:
+      - "users_extract.sql"
+      # - "credit_card_extract.sql"
+      # - "atm_card_extract.sql"
+  transactions:
+    sqls:
+      - "transactions_extract.sql"
+      # - "credit_card_extract.sql"
+      # - "atm_card_extract.sql"

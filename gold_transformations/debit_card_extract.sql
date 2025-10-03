@@ -1,0 +1,1 @@
+select * from cards where card_type='Debit';
