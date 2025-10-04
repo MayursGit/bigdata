@@ -2,6 +2,7 @@ from pyspark.sql.types import StructType, StructField, StringType, IntegerType, 
 
 users_schema = StructType([
     StructField("id", IntegerType(), True),
+    StructField("name", StringType(), True),
     StructField("current_age", IntegerType(), True),
     StructField("retirement_age", IntegerType(), True),
     StructField("birth_year", IntegerType(), True),

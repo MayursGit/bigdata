@@ -9,8 +9,14 @@ dev:
       - "users_extract.sql"
       # - "credit_card_extract.sql"
       # - "atm_card_extract.sql"
+
   transactions:
     sqls:
       - "transactions_extract.sql"
+      #- "debit_transactions_extract.py"
       # - "credit_card_extract.sql"
       # - "atm_card_extract.sql"
+    transformations:
+      - "debit_transactions_extract.py"
+      - "credit_transactions_extract.py"
+    trans_inputs: ['transactions','cards','users']

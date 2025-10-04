@@ -8,40 +8,43 @@ import os
 from typing import Optional, Union
 import importlib
 import pkgutil
-import sys
 sys.path.append("/Workspace/Users/mayur10594@gmail.com/ETL_project")
 import schemas
 
-
-
-def load_config(path,env) -> tuple[dict, dict]:
+def load_config(path: str, env: str) -> dict:
     """
-    Load YAML config and return (environment_config, tables_config)
+    Load configuration from a YAML file and extract settings for a specific environment.
+    (Assumes environments like 'dev', 'test', 'prod' are top-level keys in YAML)
 
     Args:
-        env (str): Environment name (e.g., 'dev', 'test', 'prod')
-        path (str): Path to YAML config file in DBFS
+        path (str): Path to the YAML configuration file.
+        env (str): Environment name to load (e.g., 'dev', 'prod').
 
     Returns:
-        tuple: (env_config, tables_config)
+        dict: Configuration dictionary for the specified environment.
     """
-    with open(path, "r") as f:
-        config = yaml.safe_load(f)
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Config file not found: {path}")
 
-    if "environments" not in config:
-        raise KeyError("Missing 'environments' section in YAML")
-    if env not in config["environments"]:
+    with open(path, "r") as f:
+        try:
+            config = yaml.safe_load(f)
+        except yaml.YAMLError as e:
+            raise ValueError(f"Failed to parse YAML file '{path}': {e}")
+
+    if not isinstance(config, dict):
+        raise ValueError(f"Invalid YAML format: expected a dictionary at root, got {type(config).__name__}")
+
+    if env not in config:
         raise KeyError(f"Environment '{env}' not found in YAML config")
 
-    env_config = config["environments"][env]
-    tables_config = config.get("tables", {})
-
-    return env_config, tables_config
+    return config[env]
 
 
-import os
-import importlib
-import schemas
+def load_sqls(path,file):
+    file_path=f"{path}/{file}"
+    with open(file_path, "r") as f:
+        return f.read()
 
 def load_all_schemas():
     schema_map = {}
@@ -67,9 +70,6 @@ def load_all_schemas():
 # Usage
 # schemas_map = load_all_schemas()
 # print("All schemas loaded:", schemas_map.keys())
-
-
-
 
 class DefaultContextFilter(logging.Filter):
     """Ensures log record always has context fields like job_id, run_id, task_key, env."""
@@ -148,7 +148,6 @@ def create_tables(spark,schemas,database,clientId):
         print(f"{table} table  created successfully under {database} schema")
 
 
-
 def run_scd_type2(spark, df_source, target_table_path, config_path):
     """
     Apply SCD Type 2 merge logic (update, insert, delete, soft delete).
@@ -167,19 +166,21 @@ def run_scd_type2(spark, df_source, target_table_path, config_path):
     options = config.get("options", {})
 
     # Extract audit column names
-    col_create_user = audit_cols["create_user"]
-    col_create_date = audit_cols["create_date"]
-    col_update_user = audit_cols["update_user"]
-    col_update_date = audit_cols["update_date"]
-    col_start_date  = audit_cols["start_date"]
-    col_end_date    = audit_cols["end_date"]
-    col_active      = audit_cols["active_status"]
+    col_create_user = audit_cols["CreateUser"]
+    col_create_date = audit_cols["CreateDate"]
+    col_create_process = audit_cols["CreateProcess"]
+    col_update_user = audit_cols["UpdateUser"]
+    col_update_date = audit_cols["UpdateDate"]
+    col_update_process = audit_cols["UpdateProcess"]
+    col_start_date  = audit_cols["StartDate"]
+    col_end_date    = audit_cols["EndDate"]
+    col_active      = audit_cols["ActiveStatus"]
 
     # Extract audit values
-    create_user_val = audit_vals["create_user"]
-    update_user_val = audit_vals["update_user"]
-    active_val = audit_vals["active_status_active"]
-    inactive_val = audit_vals["active_status_inactive"]
+    create_user_val = audit_vals["CreateUser"]
+    update_user_val = audit_vals["UpdateUser"]
+    active_val = audit_vals["ActiveStatus_active"]
+    inactive_val = audit_vals["ActiveStatus_inactive"]
 
     # Load target delta table
     targetDelta = DeltaTable.forName(spark, target_table_path)

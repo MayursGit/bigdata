@@ -1,36 +1,54 @@
 keys:
-  - id
+  - UserId
 #  - client_id
 
 hash_columns:
-  - current_age
-  - retirement_age
-  - birth_year
-  - birth_month
-  - gender
-  - address
-  - latitude
-  - longitude
-  - per_capita_income
-  - yearly_income
-  - total_debt
-  - credit_score
-  - num_credit_cards
+  - UserName
+  - Gender
+  - BirthYear
+  - BirthMonth
+  - CurrentAge
+  - RetirementAge
+  - UserAddress1
+  - UserAddress2
+  - UserAddress3
+  - PerCapitaIncome
+  - UserIncome
+  - UserDebt
+  - CreditScore
+  - TotalCreditLimit
+  - NumOfCards
+  - BatchId
+  # - current_age
+  # - retirement_age
+  # - birth_year
+  # - birth_month
+  # - gender
+  # - address
+  # - latitude
+  # - longitude
+  # - per_capita_income
+  # - yearly_income
+  # - total_debt
+  # - credit_score
+  # - num_credit_cards
 
 audit_columns:
-  create_user: create_user
-  create_date: create_date
-  update_user: update_user
-  update_date: update_date
-  start_date: start_date
-  end_date: end_date
-  active_status: active_status
+  CreateUser: CreateUser
+  CreateDate: CreateDate
+  CreateProcess: CreateProcess
+  UpdateUser: UpdateUser
+  UpdateDate: UpdateDate
+  UpdateProcess: UpdateProcess
+  StartDate: StartDate
+  EndDate: EndDate
+  ActiveStatus: ActiveStatus
 
 audit_values:
-  create_user: cpprod
-  update_user: cpprod
-  active_status_active: A
-  active_status_inactive: D
+  CreateUser: cpprod
+  UpdateUser: cpprod
+  ActiveStatus_active: A
+  ActiveStatus_inactive: D
 
 options:
   soft_delete: false   # enable or disable soft delete
